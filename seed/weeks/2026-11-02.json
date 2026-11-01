@@ -1,0 +1,761 @@
+{
+  "id": "2026-11-02",
+  "title": "Vika 45 · 2.–8. nóvember",
+  "summary": "Fjórar kvöldmáltíðir fyrir lítið heimili; 500 g hakk dugar í tvær og afgangur af lærunum fer í frysti.",
+  "prep": [
+    "Daginn sem verslað er: skiptu 690 g lærapakkanum, 250 g í ísskáp fyrir þriðjudag, restin í tvo poka í frysti.",
+    "Skiptu hakkinu í tvennt; frystu helminginn fyrir fimmtudag og taktu hann út miðvikudagskvöld.",
+    "Rauða paprikan dugar í báða hakkréttina, hálf í hvorn."
+  ],
+  "days": [
+    {
+      "day": "Mánudagur",
+      "date": "2026-11-02",
+      "options": [
+        "lax-limesmjor",
+        "plokkfiskur"
+      ],
+      "chosen": "lax-limesmjor"
+    },
+    {
+      "day": "Þriðjudagur",
+      "date": "2026-11-03",
+      "options": [
+        "kjuklingapasta",
+        "kokos-kjuklingur",
+        "tikka-masala"
+      ],
+      "chosen": "kjuklingapasta"
+    },
+    {
+      "day": "Miðvikudagur",
+      "date": "2026-11-04",
+      "options": [
+        "hakk-pasta",
+        "hakkveisla"
+      ],
+      "chosen": "hakk-pasta"
+    },
+    {
+      "day": "Fimmtudagur",
+      "date": "2026-11-05",
+      "options": [
+        "hakk-quesadilla",
+        "tikka-masala"
+      ],
+      "chosen": "hakk-quesadilla"
+    },
+    {
+      "day": "Föstudagur–sunnudagur",
+      "date": "2026-11-06",
+      "options": [
+        "afgangar"
+      ],
+      "chosen": "afgangar"
+    }
+  ],
+  "recipes": {
+    "lax-limesmjor": {
+      "name": "Landlax í limesmjöri með smælki og spergilkáli",
+      "source": {
+        "name": "Matseðill vikunnar"
+      },
+      "minutes": 30,
+      "servings": 2,
+      "tags": [
+        "fiskur",
+        "ofnréttur",
+        "fljótlegt"
+      ],
+      "intro": "Allt fer í ofninn á 200 °C; kartöflurnar fara inn fyrst, laxinn og spergilkálið síðustu 15–20 mínúturnar.",
+      "ingredients": [
+        "1 pakki Landlax lax í limesmjöri, ca. 450 g",
+        "5 litlar kartöflur úr lausu (ca. 400 g)",
+        "ca. 250 g brokkólí (hálfur frosinn poki)",
+        "Olía, salt og pipar"
+      ],
+      "steps": [
+        "Hitið ofninn í 200 °C. Skerið kartöflurnar í tvennt, veltið upp úr olíu, salti og pipar og bakið í ca. 15 mínútur.",
+        "Setjið laxinn í eldfast mót með smjörinu og brokkólíið með smá olíu á ofnplötuna hjá kartöflunum.",
+        "Bakið allt saman í 15–20 mínútur, þar til laxinn flagnar auðveldlega í sundur. Fylgið tíma á umbúðum laxins ef hann er annar.",
+        "Hellið limesmjörinu úr mótinu yfir kartöflurnar þegar borið er fram."
+      ],
+      "tip": "Afgangur af laxi er góður kaldur á brauð eða í salat daginn eftir.",
+      "buy": [
+        {
+          "name": "Landlax lax í limesmjöri",
+          "sku": "100260654",
+          "qty": 1,
+          "price": 0,
+          "category": "Kjöt og fiskur",
+          "url": "https://kronan.is/vara/100260654",
+          "amount": "ca. 450 g"
+        },
+        {
+          "name": "Kartöflur í lausu",
+          "sku": "100127329",
+          "qty": 5,
+          "price": 170,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/100127329",
+          "amount": "5 stk., ca. 400 g"
+        },
+        {
+          "name": "Gestus brokkóli í bitum",
+          "sku": "100257788",
+          "qty": 1,
+          "price": 399,
+          "category": "Frystivara",
+          "url": "https://kronan.is/vara/100257788",
+          "amount": "450 g"
+        }
+      ]
+    },
+    "plokkfiskur": {
+      "name": "Plokkfiskur",
+      "source": {
+        "name": "Krónan",
+        "url": "https://kronan.is/uppskriftir/plokkfiskur"
+      },
+      "image": "https://media.kronan.is/recipe_image_desktop/15ff885c-dc1b-40ea-8f41-71c8f3871122.jpg",
+      "minutes": 50,
+      "servings": 4,
+      "tags": [
+        "fiskur",
+        "íslenskt",
+        "barnvænt"
+      ],
+      "intro": "Klassískur íslenskur réttur; afgangurinn er enn betri daginn eftir.",
+      "ingredients": [
+        "3 msk. smjör",
+        "1 laukur, saxaður smátt",
+        "2 msk. hveiti",
+        "3-4 dl mjólk",
+        "600 g ýsa eða þorskur",
+        "500 g kartöflur, soðnar",
+        "2 tsk. dijon-sinnep",
+        "1 tsk. karrí",
+        "200 g rifinn ostur",
+        "Fersk steinselja, salt"
+      ],
+      "steps": [
+        "Hitið vatn að suðu, setjið fiskinn út í, lokið ofan á, slökkvið og látið standa í 6–8 mín. með 1 tsk. salti.",
+        "Takið fiskinn upp með gatspaða og setjið til hliðar.",
+        "Steikið laukinn í smjörinu í 3–4 mín. þar til hann verður glær.",
+        "Stráið hveitinu yfir og bætið mjólkinni út í í smáum skömmtum, hrærið allan tímann.",
+        "Kryddið með dijon-sinnepi, karrí, salti og pipar.",
+        "Skerið kartöflurnar í grófa bita, takið fiskinn í sundur og blandið varlega saman við sósuna í 1–2 mín.",
+        "Stráið osti yfir og bakið í 6–7 mín. við 220 °C þar til osturinn er gullinn."
+      ],
+      "buy": [
+        {
+          "name": "Fiskverzlun Hafliða ýsuflök roð og beinlaus",
+          "sku": "00600679",
+          "qty": 1,
+          "price": 2963,
+          "category": "Kjöt og fiskur",
+          "url": "https://kronan.is/vara/00600679",
+          "amount": "ca. 780 g"
+        },
+        {
+          "name": "Þykkvabæjar kartöflur 1kg",
+          "sku": "100248525",
+          "qty": 1,
+          "price": 599,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/100248525",
+          "amount": "1 kg"
+        },
+        {
+          "name": "MS nýmjólk",
+          "sku": "02500188",
+          "qty": 1,
+          "price": 238,
+          "category": "Mjólkurvörur og ostar",
+          "url": "https://kronan.is/vara/02500188",
+          "amount": "1 l"
+        },
+        {
+          "name": "Laukur",
+          "sku": "01000629",
+          "qty": 1,
+          "price": 33,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/01000629",
+          "amount": "1 stk."
+        },
+        {
+          "name": "MS heimilisostur rifinn",
+          "sku": "100204268",
+          "qty": 1,
+          "price": 1090,
+          "category": "Mjólkurvörur og ostar",
+          "url": "https://kronan.is/vara/100204268",
+          "amount": "370 g"
+        },
+        {
+          "name": "First Price dijon sinnep",
+          "sku": "100180931",
+          "qty": 1,
+          "price": 249,
+          "category": "Krydd og sósur",
+          "url": "https://kronan.is/vara/100180931",
+          "amount": "370 g"
+        }
+      ]
+    },
+    "kjuklingapasta": {
+      "name": "Kjúklingapasta með sólþurrkuðum tómötum og mozzarella",
+      "source": {
+        "name": "GulurRauðurGrænn&Salt",
+        "url": "https://grgs.is/2015/06/18/kjuklingapasta-med-solthurrkudum-tomotum-og-braeddum-mozzarella-i-hvitlauksrjomasosu/"
+      },
+      "minutes": 25,
+      "servings": 2,
+      "tags": [
+        "kjúklingur",
+        "pasta"
+      ],
+      "intro": "Hálf uppskrift, með úrbeinuðum lærum í stað bringa.",
+      "ingredients": [
+        "250 g úrbeinuð kjúklingalæri, skorin í litla bita",
+        "125 g penne",
+        "2 hvítlauksrif, pressuð",
+        "ca. ½ krukka sólþurrkaðir tómatar í olíu",
+        "120 ml matreiðslurjómi",
+        "55 g rifinn mozzarella",
+        "½ msk þurrkað basil, klípa af chiliflögum",
+        "Paprikuduft og salt"
+      ],
+      "steps": [
+        "Sjóðið pastað eftir leiðbeiningum á pakka og geymið ca. 60 ml af pastavatninu.",
+        "Takið tómatana úr olíunni og steikið með hvítlauknum á pönnu í ca. 1 mínútu. Takið af pönnunni og skerið tómatana smátt.",
+        "Kryddið kjúklinginn með paprikudufti og salti og steikið þar til hann er gegnsteiktur, ca. 6–8 mínútur.",
+        "Bætið tómötum og hvítlauk aftur á pönnuna, svo rjóma og mozzarella. Hitið að suðu, lækkið og hrærið þar til osturinn bráðnar.",
+        "Þynnið sósuna með pastavatninu, bætið pastanu út í og kryddið með basil, chiliflögum og salti."
+      ],
+      "tip": "Restin af lærunum (ca. 440 g) fer í tvo poka í frysti á innkaupadegi.",
+      "buy": [
+        {
+          "name": "Ódýrt kjúklingalæri úrbeinuð 100%",
+          "sku": "100261708",
+          "qty": 1,
+          "price": 2483,
+          "category": "Kjöt og fiskur",
+          "url": "https://kronan.is/vara/100261708",
+          "amount": "ca. 690 g"
+        },
+        {
+          "name": "Rummo penne",
+          "sku": "100243657",
+          "qty": 1,
+          "price": 475,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100243657",
+          "amount": "500 g"
+        },
+        {
+          "name": "Gott í matinn mozzarella rifinn",
+          "sku": "02400079",
+          "qty": 1,
+          "price": 680,
+          "category": "Mjólkurvörur og ostar",
+          "url": "https://kronan.is/vara/02400079",
+          "amount": "200 g"
+        },
+        {
+          "name": "MS matreiðslurjómi 15%",
+          "sku": "02500282",
+          "qty": 1,
+          "price": 558,
+          "category": "Mjólkurvörur og ostar",
+          "url": "https://kronan.is/vara/02500282",
+          "amount": "500 ml"
+        },
+        {
+          "name": "Gestus sólþurrkaðir tómatar í olíu",
+          "sku": "100225460",
+          "qty": 1,
+          "price": 498,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100225460",
+          "amount": "290 g"
+        },
+        {
+          "name": "Hvítlaukur",
+          "sku": "100234346",
+          "qty": 1,
+          "price": 199,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/100234346",
+          "amount": "200 g"
+        }
+      ]
+    },
+    "kokos-kjuklingur": {
+      "name": "Kókoskarrí kjúklingur og hrísgrjón",
+      "source": {
+        "name": "Krónan",
+        "url": "https://kronan.is/uppskriftir/kokos-kjuklingur"
+      },
+      "image": "https://media.kronan.is/recipe_image_desktop/cdf456de-d580-4fe6-91cc-34a0f29e379b.png",
+      "minutes": 35,
+      "servings": 4,
+      "tags": [
+        "kjúklingur",
+        "indverskt",
+        "auðvelt"
+      ],
+      "intro": "Mjög einfalt; hrísgrjónin soðin í kókosmjólk.",
+      "ingredients": [
+        "Kjúklingalæri",
+        "Hraðlestin coconut curry sósa",
+        "2 dl jasmine hrísgrjón",
+        "1 dós kókosmjólk",
+        "½ dl vatn",
+        "½ tsk salt",
+        "Grísk jógúrt",
+        "Kóríander",
+        "Hraðlestin naan brauð"
+      ],
+      "steps": [
+        "Skolið hrísgrjónin og setjið í pott með kókosmjólk, vatni og salti. Látið suðuna koma upp, setjið lokið á og lækkið hitann.",
+        "Skerið kjúkling í litla bita og steikið á pönnu. Bætið kókoskarrísósunni út á og leyfið að malla.",
+        "Hitið naan brauð í ofni eftir leiðbeiningum.",
+        "Eftir 15 mínútur, takið hrísgrjónin af hellunni og leyfið þeim að hvíla með lokinu í 5–10 mín.",
+        "Berið fram með kóríander og grískri jógúrt."
+      ],
+      "buy": [
+        {
+          "name": "Ódýrt kjúklingalæri úrbeinuð 100%",
+          "sku": "100261708",
+          "qty": 1,
+          "price": 2483,
+          "category": "Kjöt og fiskur",
+          "url": "https://kronan.is/vara/100261708",
+          "amount": "ca. 690 g"
+        },
+        {
+          "name": "Hraðlestin coconut curry sósa",
+          "sku": "100257806",
+          "qty": 1,
+          "price": 1729,
+          "category": "Krydd og sósur",
+          "url": "https://kronan.is/vara/100257806",
+          "amount": "500 g"
+        },
+        {
+          "name": "Grön Balance hrísgrjón jasmin",
+          "sku": "100217308",
+          "qty": 1,
+          "price": 607,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100217308",
+          "amount": "1 kg"
+        },
+        {
+          "name": "Grön Balance kókosmjólk 17-19%",
+          "sku": "100232368",
+          "qty": 1,
+          "price": 293,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100232368",
+          "amount": "400 ml"
+        },
+        {
+          "name": "Hraðlestin naan brauð",
+          "sku": "100249456",
+          "qty": 1,
+          "price": 689,
+          "category": "Brauð",
+          "url": "https://kronan.is/vara/100249456",
+          "amount": "180 g"
+        },
+        {
+          "name": "Gestus grísk jógúrt 10%",
+          "sku": "100236144",
+          "qty": 1,
+          "price": 806,
+          "category": "Mjólkurvörur og ostar",
+          "url": "https://kronan.is/vara/100236144",
+          "amount": "1 kg"
+        }
+      ]
+    },
+    "tikka-masala": {
+      "name": "Kjúklingur í tikka masala",
+      "source": {
+        "name": "Krónan",
+        "url": "https://kronan.is/uppskriftir/kjuklingur_tikkamasala"
+      },
+      "image": "https://media.kronan.is/recipe_image_desktop/takka-masala-desktop.jpg",
+      "minutes": 20,
+      "servings": 4,
+      "tags": [
+        "kjúklingur",
+        "indverskt",
+        "fljótlegt"
+      ],
+      "intro": "Tilbúið á 20 mínútum; notaðu lærin í stað bringa.",
+      "ingredients": [
+        "500 ml Patak tikka masala sósa",
+        "400 ml kókosmjólk",
+        "1 paprika",
+        "1 laukur",
+        "Kjúklingalæri (í stað 4 bringa)",
+        "2 tsk. olía",
+        "Salt og pipar"
+      ],
+      "steps": [
+        "Skerið kjúklinginn í bita og steikið á pönnu með olíu við meðalhita. Kryddið með salti og pipar.",
+        "Skerið papriku og lauk og steikið létt með kjúklingnum.",
+        "Bætið tikka masala sósunni út á og látið malla í 15 mínútur.",
+        "Hrærið kókosmjólkinni saman við rétt áður en borið er fram."
+      ],
+      "buy": [
+        {
+          "name": "Ódýrt kjúklingalæri úrbeinuð 100%",
+          "sku": "100261708",
+          "qty": 1,
+          "price": 2483,
+          "category": "Kjöt og fiskur",
+          "url": "https://kronan.is/vara/100261708",
+          "amount": "ca. 690 g"
+        },
+        {
+          "name": "Patak's tikka masala sósa",
+          "sku": "100211827",
+          "qty": 1,
+          "price": 384,
+          "category": "Krydd og sósur",
+          "url": "https://kronan.is/vara/100211827",
+          "amount": "450 g"
+        },
+        {
+          "name": "Grön Balance kókosmjólk 17-19%",
+          "sku": "100232368",
+          "qty": 1,
+          "price": 293,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100232368",
+          "amount": "400 ml"
+        },
+        {
+          "name": "Paprika rauð",
+          "sku": "100253122",
+          "qty": 1,
+          "price": 179,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/100253122",
+          "amount": "1 stk."
+        },
+        {
+          "name": "Laukur",
+          "sku": "01000629",
+          "qty": 1,
+          "price": 33,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/01000629",
+          "amount": "1 stk."
+        },
+        {
+          "name": "First Price hrísgrjón í suðupoka",
+          "sku": "100179739",
+          "qty": 1,
+          "price": 139,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100179739",
+          "amount": "500 g"
+        }
+      ]
+    },
+    "hakk-pasta": {
+      "name": "Hakk og pasta",
+      "source": {
+        "name": "Krónan",
+        "url": "https://kronan.is/uppskriftir/hakk_spaghetti"
+      },
+      "image": "https://media.kronan.is/recipe_image_desktop/spaghetti-desktop.jpg",
+      "minutes": 20,
+      "servings": 2,
+      "tags": [
+        "hakk",
+        "pasta",
+        "ódýrt",
+        "barnvænt"
+      ],
+      "intro": "Hálf uppskrift með penne í stað spaghetti.",
+      "ingredients": [
+        "250 g ungnautahakk (helmingur pakkans)",
+        "125 g penne",
+        "200 g pastasósa (hálf krukka)",
+        "½ laukur, smátt saxaður",
+        "½ rauð paprika, í bitum",
+        "Olía, salt og pipar"
+      ],
+      "steps": [
+        "Sjóðið pastað eftir leiðbeiningum á pakka með smá salti.",
+        "Hitið olíu á pönnu og steikið hakkið þar til það er brúnað.",
+        "Bætið lauk, papriku og pastasósu út í og látið malla á miðlungshita í ca. 7 mínútur.",
+        "Smakkið til með salti og pipar og blandið pastanu saman við."
+      ],
+      "tip": "Skiptu hakkinu í tvennt; frystu helminginn fyrir fimmtudag.",
+      "buy": [
+        {
+          "name": "Ódýrt ungnautahakk",
+          "sku": "100227558",
+          "qty": 1,
+          "price": 1699,
+          "category": "Kjöt og fiskur",
+          "url": "https://kronan.is/vara/100227558",
+          "amount": "500 g"
+        },
+        {
+          "name": "Rummo penne",
+          "sku": "100243657",
+          "qty": 1,
+          "price": 475,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100243657",
+          "amount": "500 g"
+        },
+        {
+          "name": "Barilla pastasósa basil",
+          "sku": "03701009",
+          "qty": 1,
+          "price": 440,
+          "category": "Krydd og sósur",
+          "url": "https://kronan.is/vara/03701009",
+          "amount": "400 g"
+        },
+        {
+          "name": "Laukur",
+          "sku": "01000629",
+          "qty": 1,
+          "price": 33,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/01000629",
+          "amount": "1 stk."
+        },
+        {
+          "name": "Paprika rauð",
+          "sku": "100253122",
+          "qty": 1,
+          "price": 179,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/100253122",
+          "amount": "1 stk."
+        }
+      ]
+    },
+    "hakkveisla": {
+      "name": "Hakkveislan hennar mömmu",
+      "source": {
+        "name": "Krónan",
+        "url": "https://kronan.is/uppskriftir/hakkveisla"
+      },
+      "image": "https://media.kronan.is/recipe_image_desktop/636af249-2473-45f8-b544-9086a980ee8d.jpg",
+      "minutes": 40,
+      "servings": 4,
+      "tags": [
+        "hakk",
+        "mexíkóskt",
+        "ofnréttur"
+      ],
+      "intro": "Taco-hakk með baunum, tortillum og osti bakað í ofni.",
+      "ingredients": [
+        "2 hvítlauksgeirar",
+        "400 g nautahakk",
+        "1 pakki mild taco seasoning",
+        "2 tsk cumin",
+        "390 g hakkaðir tómatar",
+        "390 g nýrnabaunir",
+        "2 msk tómatpúrra",
+        "4 litlar tortillur",
+        "Rjómaostur með svörtum pipar",
+        "Rifinn ostur",
+        "Basmati hrísgrjón, sýrður rjómi, kóríander"
+      ],
+      "steps": [
+        "Mýkið hvítlaukinn á pönnu í smá olíu.",
+        "Steikið hakkið og kryddið með taco kryddi og cumin.",
+        "Bætið tómötum, nýrnabaunum og tómatpúrru út í og látið malla. Færið í eldfast mót ef pannan má ekki í ofn.",
+        "Smyrjið tortillurnar með rjómaosti, brjótið og skerið í tvennt. Raðið ofan á hakkið og stráið osti yfir.",
+        "Bakið við 220 °C í 10–15 mínútur.",
+        "Berið fram með hrísgrjónum, sýrðum rjóma og kóríander."
+      ],
+      "buy": [
+        {
+          "name": "Ódýrt ungnautahakk",
+          "sku": "100227558",
+          "qty": 1,
+          "price": 1699,
+          "category": "Kjöt og fiskur",
+          "url": "https://kronan.is/vara/100227558",
+          "amount": "500 g"
+        },
+        {
+          "name": "Broken Taco spice mix",
+          "sku": "100271490",
+          "qty": 1,
+          "price": 195,
+          "category": "Krydd og sósur",
+          "url": "https://kronan.is/vara/100271490",
+          "amount": "25 g"
+        },
+        {
+          "name": "Broken Taco tortilla mini 10stk",
+          "sku": "100271487",
+          "qty": 1,
+          "price": 289,
+          "category": "Brauð",
+          "url": "https://kronan.is/vara/100271487",
+          "amount": "160 g"
+        },
+        {
+          "name": "Krónan lífrænt tómatar maukaðir",
+          "sku": "100272277",
+          "qty": 1,
+          "price": 229,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100272277",
+          "amount": "390 g"
+        },
+        {
+          "name": "Krónan lífrænt nýrnabaunir",
+          "sku": "100272280",
+          "qty": 1,
+          "price": 229,
+          "category": "Þurrvara",
+          "url": "https://kronan.is/vara/100272280",
+          "amount": "390 g"
+        },
+        {
+          "name": "MS rjómaostur með svörtum pipar",
+          "sku": "100247205",
+          "qty": 1,
+          "price": 720,
+          "category": "Mjólkurvörur og ostar",
+          "url": "https://kronan.is/vara/100247205",
+          "amount": "200 g"
+        },
+        {
+          "name": "MS heimilisostur rifinn",
+          "sku": "100204268",
+          "qty": 1,
+          "price": 1090,
+          "category": "Mjólkurvörur og ostar",
+          "url": "https://kronan.is/vara/100204268",
+          "amount": "370 g"
+        }
+      ]
+    },
+    "hakk-quesadilla": {
+      "name": "Hakk-quesadilla",
+      "source": {
+        "name": "Krónan",
+        "url": "https://kronan.is/uppskriftir/quesadilla"
+      },
+      "minutes": 20,
+      "servings": 2,
+      "tags": [
+        "hakk",
+        "mexíkóskt",
+        "fljótlegt",
+        "barnvænt"
+      ],
+      "intro": "Takókryddað hakk í stað fajitas-kjúklings; 2 quesadillur úr 4 vefjum.",
+      "ingredients": [
+        "250 g ungnautahakk (frysti helmingurinn, þiðinn yfir nótt)",
+        "½ poki takókrydd",
+        "4 tortillavefjur (medium)",
+        "½ rauð paprika, smátt skorin",
+        "ca. 100 g ostur: afgangur af mozzarella og rifinn ostur",
+        "Salsa eða sýrður rjómi, ef til er"
+      ],
+      "steps": [
+        "Steikið hakkið, bætið takókryddinu og vatni út í eftir leiðbeiningum og látið malla þar til vökvinn er farinn.",
+        "Dreifið hakki, papriku og osti á tvær vefjur og leggið hinar ofan á.",
+        "Steikið á þurri pönnu á miðlungshita, 2–3 mín. á hvorri hlið. Eða bakið í ofni á 200 °C í ca. 10 mín.",
+        "Skerið í sneiðar og berið fram."
+      ],
+      "buy": [
+        {
+          "name": "Ódýrt ungnautahakk",
+          "sku": "100227558",
+          "qty": 1,
+          "price": 1699,
+          "category": "Kjöt og fiskur",
+          "url": "https://kronan.is/vara/100227558",
+          "amount": "500 g"
+        },
+        {
+          "name": "Banderos tortilla vefjur medium",
+          "sku": "100224732",
+          "qty": 1,
+          "price": 299,
+          "category": "Brauð",
+          "url": "https://kronan.is/vara/100224732",
+          "amount": "320 g"
+        },
+        {
+          "name": "Banderos taco spice mix",
+          "sku": "100224738",
+          "qty": 1,
+          "price": 115,
+          "category": "Krydd og sósur",
+          "url": "https://kronan.is/vara/100224738",
+          "amount": "40 g"
+        },
+        {
+          "name": "Gott í matinn mozzarella rifinn",
+          "sku": "02400079",
+          "qty": 1,
+          "price": 680,
+          "category": "Mjólkurvörur og ostar",
+          "url": "https://kronan.is/vara/02400079",
+          "amount": "200 g"
+        },
+        {
+          "name": "Paprika rauð",
+          "sku": "100253122",
+          "qty": 1,
+          "price": 179,
+          "category": "Grænmeti og ávextir",
+          "url": "https://kronan.is/vara/100253122",
+          "amount": "1 stk."
+        }
+      ]
+    },
+    "afgangar": {
+      "name": "Afgangar eða frystur læraskammtur",
+      "minutes": 15,
+      "tags": [
+        "afgangar"
+      ],
+      "intro": "Nýtið afganga vikunnar eða takið læraskammt úr frysti.",
+      "ingredients": [
+        "Afgangar úr ísskáp",
+        "Frystur læraskammtur (ca. 220 g)"
+      ],
+      "steps": [
+        "Takið læraskammt úr frysti kvöldið áður ef á að elda hann."
+      ],
+      "buy": []
+    }
+  },
+  "extras": [],
+  "pantryAssumed": [
+    "olía",
+    "salt",
+    "pipar",
+    "paprikuduft",
+    "basil",
+    "chiliflögur",
+    "smjör",
+    "hveiti",
+    "karrí"
+  ],
+  "bought": {},
+  "updatedAt": "2026-11-01T12:00:00.000Z"
+}

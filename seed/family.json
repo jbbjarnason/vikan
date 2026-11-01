@@ -1,0 +1,77 @@
+{
+  "household": "Lítið heimili",
+  "members": [],
+  "servings": 2,
+  "dinnersPerWeek": 4,
+  "maxWeeknightMinutes": 30,
+  "budgetIskPerWeek": 10000,
+  "likes": [],
+  "dislikes": [],
+  "allergies": [],
+  "preferredStore": "Krónan",
+  "preferredProducts": {},
+  "notes": "Nýta afganga og frysti; sami pakki í tvo rétti þegar hægt er.",
+  "recipeSources": [
+    {
+      "name": "Krónan",
+      "url": "https://kronan.is/uppskriftir",
+      "how": "Krónan MCP (search_recipes/fetch_recipe) – vörur beint í körfu"
+    },
+    {
+      "name": "Gott í matinn (MS)",
+      "url": "https://www.gottimatinn.is",
+      "how": "read_recipe_page (JSON-LD), ~1.770 uppskriftir"
+    },
+    {
+      "name": "Nettó",
+      "url": "https://netto.is/recipes",
+      "how": "read_recipe_page (JSON-LD), ódýrt"
+    },
+    {
+      "name": "mbl.is/matur",
+      "url": "https://www.mbl.is/matur/",
+      "how": "read_recipe_page (JSON-LD)"
+    },
+    {
+      "name": "GulurRauðurGrænn&Salt",
+      "url": "https://grgs.is",
+      "how": "WordPress: /wp-json/wp/v2/posts?search=…, fljótlegt"
+    },
+    {
+      "name": "Ljúfmeti",
+      "url": "https://ljufmeti.com",
+      "how": "WordPress.com API, fjölskyldumatur og fiskur"
+    },
+    {
+      "name": "Eldhússögur",
+      "url": "https://eldhussogur.com",
+      "how": "WordPress.com API"
+    },
+    {
+      "name": "Albert eldar",
+      "url": "https://alberteldar.is",
+      "how": "WordPress API, heimilismatur"
+    },
+    {
+      "name": "Matprat (NO)",
+      "url": "https://www.matprat.no",
+      "how": "read_recipe_page (JSON-LD), fiskur og lambakjöt"
+    },
+    {
+      "name": "Tine (NO)",
+      "url": "https://www.tine.no/oppskrifter",
+      "how": "read_recipe_page (JSON-LD)"
+    },
+    {
+      "name": "Valdemarsro (DK)",
+      "url": "https://www.valdemarsro.dk",
+      "how": "read_recipe_page, hversdagsmatur"
+    },
+    {
+      "name": "BBC Good Food",
+      "url": "https://www.bbcgoodfood.com",
+      "how": "read_recipe_page (JSON-LD)"
+    }
+  ],
+  "sourceRules": "Virða robots.txt (ekki Allrecipes, Serious Eats, RecipeTin Eats). Alltaf vísa á upprunalega uppskrift. Hámark 1 fyrirspurn á sekúndu."
+}

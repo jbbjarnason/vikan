@@ -1,0 +1,41 @@
+# On the home server: put this file and a .env next to each other, then
+#   docker compose up -d
+services:
+  vikan:
+    image: ghcr.io/jbbjarnason/vikan:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      MCP_TOKEN: ${MCP_TOKEN:?set MCP_TOKEN in .env}
+    volumes:
+      - vikan-data:/data
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  # Pulls new images from GHCR every 5 minutes after a push to main.
+  # Maintained fork; the original containrrr/watchtower is archived.
+  watchtower:
+    image: nickfedor/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${HOME}/.docker/config.json:/config.json:ro
+    environment:
+      WATCHTOWER_LABEL_ENABLE: "true"
+      WATCHTOWER_POLL_INTERVAL: "300"
+      WATCHTOWER_CLEANUP: "true"
+
+  # Optional: public HTTPS for /mcp so Claude's cloud can reach it.
+  # Create a tunnel in Cloudflare Zero Trust pointing at http://vikan:8080,
+  # put its token in .env, then: docker compose --profile tunnel up -d
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    profiles: [tunnel]
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CF_TUNNEL_TOKEN:-}
+
+volumes:
+  vikan-data:

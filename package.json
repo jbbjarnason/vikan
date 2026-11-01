@@ -1,0 +1,17 @@
+{
+  "name": "vikan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kvöldmatur vikunnar: símavæn síða, innkaupasaga og MCP þjónn fyrir vikulega skipulagningu",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "DATA_DIR=./data MCP_TOKEN=dev node --watch server/index.js"
+  },
+  "engines": { "node": ">=22" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  }
+}
