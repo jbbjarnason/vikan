@@ -5,6 +5,8 @@ const $subtitle = document.getElementById("subtitle");
 
 const AISLES = ["Grænmeti og ávextir", "Brauð", "Kjöt og fiskur", "Mjólkurvörur og ostar", "Þurrvara", "Krydd og sósur", "Frystivara", "Annað"];
 const DAYS = ["sunnudagur", "mánudagur", "þriðjudagur", "miðvikudagur", "fimmtudagur", "föstudagur", "laugardagur"];
+// Accusative with the article, for "á mánudaginn".
+const DAYS_ACC = ["sunnudaginn", "mánudaginn", "þriðjudaginn", "miðvikudaginn", "fimmtudaginn", "föstudaginn", "laugardaginn"];
 const MONTHS = ["janúar", "febrúar", "mars", "apríl", "maí", "júní", "júlí", "ágúst", "september", "október", "nóvember", "desember"];
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -69,7 +71,9 @@ function dayFor(week, iso) {
 }
 
 const recipeImg = (r, cls = "") =>
-  r.image ? `<img class="${cls}" src="${esc(r.image)}" alt="" loading="lazy">` : `<div class="noimg ${cls}">${esc((r.name || "?")[0])}</div>`;
+  r.image
+    ? `<div class="pic ${cls}"><img src="${esc(r.image)}" alt="" loading="lazy">${r.imageGenerated ? `<span class="ai">Mynd gerð með gervigreind</span>` : ""}</div>`
+    : `<div class="noimg ${cls}">${esc((r.name || "?")[0])}</div>`;
 
 const metaChips = (r) => {
   const chips = [r.minutes && `${r.minutes} mín`, r.servings && `${r.servings} skammtar`, ...(r.tags || []).slice(0, 3)].filter(Boolean);
@@ -91,7 +95,7 @@ async function viewTonight() {
   const { day, upcoming } = dayFor(w, t);
   const r = w.recipes[day.chosen];
   const d = new Date();
-  setHeader("Í kvöld", upcoming ? `Næsta vika byrjar ${DAYS[new Date(day.date + "T12:00").getDay()]} ${fmtDate(day.date)}` : `${DAYS[d.getDay()]} ${fmtDate(t)}`);
+  setHeader("Í kvöld", upcoming ? `Næsta vika byrjar á ${DAYS_ACC[new Date(day.date + "T12:00").getDay()]}, ${fmtDate(day.date)}` : `${DAYS[d.getDay()]} ${fmtDate(t)}`);
   const next = w.days.filter((x) => x.date > day.date).slice(0, 3);
   $view.innerHTML = `
     <article class="card hero">

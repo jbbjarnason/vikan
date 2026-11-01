@@ -8,6 +8,8 @@ services:
       - "8080:8080"
     environment:
       MCP_TOKEN: ${MCP_TOKEN:?set MCP_TOKEN in .env}
+      # Optional: generate realistic photos for recipes whose source has none.
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
     volumes:
       - vikan-data:/data
     labels:

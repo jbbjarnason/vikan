@@ -5,6 +5,7 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { z } from "zod";
 import * as store from "./store.js";
 import { readRecipePage } from "./recipepage.js";
+import { resolveImages, generationEnabled } from "./images.js";
 
 const Item = z.object({
   name: z.string().describe("Vöruheiti, e.g. 'Ódýrt ungnautahakk'"),
@@ -20,7 +21,8 @@ const Item = z.object({
 const Recipe = z.object({
   name: z.string(),
   source: z.object({ name: z.string(), url: z.string().url().optional() }).optional(),
-  image: z.string().url().optional(),
+  image: z.string().url().optional().describe("Photo from the source (Krónan image, JSON-LD image). Leave out if none; the server then takes the source page's photo or generates one."),
+  imagePrompt: z.string().optional().describe("Only if there is no source photo: English description of how the finished dish looks, for a realistic generated photo"),
   minutes: z.number().int().optional(),
   servings: z.number().int().optional(),
   tags: z.array(z.string()).optional().describe("e.g. fiskur, fljótlegt, barnvænt, grænmeti, ódýrt"),
@@ -134,8 +136,30 @@ function buildServer() {
       const saved = await store.putWeek(week);
       const list = store.groceryList(saved);
       const total = list.reduce((s, i) => s + (i.price ?? 0), 0);
-      return json({ saved: saved.id, days: saved.days.length, recipes: Object.keys(saved.recipes).length, groceryItems: list.length, estTotalIsk: total });
+      // Photos can take minutes (downloads, generation): finish in the background.
+      store.refreshImages(saved.id, resolveImages).catch((e) => console.error("images", e));
+      return json({
+        saved: saved.id,
+        days: saved.days.length,
+        recipes: Object.keys(saved.recipes).length,
+        groceryItems: list.length,
+        estTotalIsk: total,
+        images: `Fetching photos in the background (generation ${generationEnabled() ? "on" : "off"}); call refresh_images to see the result.`,
+      });
     },
+  );
+
+  server.registerTool(
+    "refresh_images",
+    {
+      title: "Refresh recipe photos",
+      description:
+        "Make sure every recipe in a week has a photo: reuse the source's photo, else generate a realistic one " +
+        "(if enabled). Returns per-recipe status: ok, source, generated, or none (reason).",
+      inputSchema: { id: z.string().describe("Monday, YYYY-MM-DD") },
+      annotations: { idempotentHint: true },
+    },
+    async ({ id }) => json(await store.refreshImages(id, resolveImages)),
   );
 
   server.registerTool(

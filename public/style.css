@@ -64,7 +64,9 @@ h3 { font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: v
 }
 .card + .card { margin-top: 12px; }
 .card .body { padding: 14px 16px 16px; }
-.hero img { aspect-ratio: 16/9; object-fit: cover; width: 100%; }
+.pic { position: relative; }
+.pic img { aspect-ratio: 16/9; object-fit: cover; width: 100%; }
+.pic .ai { position: absolute; left: 8px; bottom: 8px; font-size: 11px; padding: 2px 8px; border-radius: 99px; background: rgba(0,0,0,.55); color: #fff; }
 .hero .noimg { aspect-ratio: 16/7; background: linear-gradient(135deg, var(--accent-soft), var(--bg)); display: grid; place-items: center; font: 600 44px var(--serif); color: var(--accent); }
 .hero h2 { margin: 2px 0 6px; font-size: 25px; }
 .eyebrow { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--warm); font-weight: 650; }
@@ -93,7 +95,7 @@ h3 { font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: v
   flex: 0 0 72%; scroll-snap-align: start; text-align: left; cursor: pointer;
   background: var(--bg); border: 1.5px solid var(--line); border-radius: 12px; padding: 0; overflow: hidden;
 }
-.option img, .option .noimg { aspect-ratio: 16/9; object-fit: cover; width: 100%; }
+.option .noimg { aspect-ratio: 16/9; width: 100%; }
 .option .noimg { background: var(--accent-soft); display: grid; place-items: center; font: 600 32px var(--serif); color: var(--accent); }
 .option .t { padding: 8px 10px 10px; font-weight: 600; font-size: 15px; line-height: 1.3; }
 .option .t span { display: block; font-weight: 400; color: var(--muted); font-size: 13px; margin-top: 2px; }

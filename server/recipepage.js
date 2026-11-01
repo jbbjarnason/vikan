@@ -40,16 +40,17 @@ function findRecipe(node) {
   return findRecipe(node["@graph"]) || findRecipe(node.mainEntity);
 }
 
-export async function readRecipePage(raw) {
+// Fetch a public URL, following redirects by hand so every hop is checked
+// against private addresses. Returns the response and the final URL.
+export async function safeFetch(raw, accept = "text/html") {
   let url = new URL(raw);
   let res;
-  // Follow redirects by hand so every hop is checked against private addresses.
   for (let hop = 0; ; hop++) {
     await assertPublic(url);
     res = await fetch(url, {
       redirect: "manual",
-      signal: AbortSignal.timeout(15000),
-      headers: { "user-agent": "Vikan/1.0 (heimilis-matseðill; Claude-User)", accept: "text/html" },
+      signal: AbortSignal.timeout(20000),
+      headers: { "user-agent": "Vikan/1.0 (heimilis-matseðill; Claude-User)", accept },
     });
     const loc = res.headers.get("location");
     if (res.status < 300 || res.status >= 400 || !loc) break;
@@ -57,6 +58,25 @@ export async function readRecipePage(raw) {
     url = new URL(loc, url);
   }
   if (!res.ok) throw new Error(`HTTP ${res.status} from ${url.hostname}`);
+  return { res, url };
+}
+
+const ogImage = (html, base) => {
+  const m =
+    html.match(/<meta[^>]+property=["']og:image(?::url)?["'][^>]+content=["']([^"']+)["']/i) ||
+    html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image(?::url)?["']/i);
+  // Fallbacks: microdata ImageObject url, then the first WordPress upload.
+  const md = m || html.match(/itemprop=["']image["'][\s\S]{0,400}?(?:content|src)=["']([^"']+\.(?:jpe?g|png|webp)[^"']*)["']/i);
+  const wp = md || html.match(/["'](https?:\/\/[^"' ]+\/wp-content\/uploads\/[^"' ]+\.(?:jpe?g|png|webp))["']/i);
+  try {
+    return wp ? new URL(wp[1].replace(/&amp;/g, "&"), base).href : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+export async function readRecipePage(raw) {
+  const { res, url } = await safeFetch(raw);
   const html = (await res.text()).slice(0, 3_000_000);
   const blocks = [...html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)];
   for (const [, body] of blocks) {
@@ -73,7 +93,7 @@ export async function readRecipePage(raw) {
       found: true,
       url: url.href,
       name: text(r.name),
-      image: typeof img === "string" ? img : img?.url,
+      image: (typeof img === "string" ? img : img?.url) || ogImage(html, url),
       minutes: minutes(r.totalTime) ?? minutes(r.cookTime),
       servings: text(Array.isArray(r.recipeYield) ? r.recipeYield[0] : String(r.recipeYield ?? "")),
       ingredients: (r.recipeIngredient || []).map(text),
@@ -83,5 +103,5 @@ export async function readRecipePage(raw) {
     };
   }
   const title = html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1];
-  return { found: false, url: url.href, title: text(title), hint: "No schema.org Recipe on this page; read the page text instead." };
+  return { found: false, url: url.href, title: text(title), image: ogImage(html, url), hint: "No schema.org Recipe on this page; read the page text instead." };
 }

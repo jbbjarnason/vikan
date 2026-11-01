@@ -6,6 +6,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import * as store from "./store.js";
 import { handleMcp } from "./mcp.js";
+import { IMAGES_DIR, resolveImages } from "./images.js";
 
 const PORT = Number(process.env.PORT || 8080);
 const MCP_TOKEN = process.env.MCP_TOKEN || "";
@@ -19,6 +20,10 @@ const TYPES = {
   ".webmanifest": "application/manifest+json",
   ".svg": "image/svg+xml",
   ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".webp": "image/webp",
+  ".avif": "image/avif",
+  ".gif": "image/gif",
 };
 
 function send(res, status, body, type = "application/json") {
@@ -95,6 +100,17 @@ async function api(req, res, url) {
   return send(res, 404, { error: "not found" });
 }
 
+async function imageFile(res, pathname) {
+  const file = path.join(IMAGES_DIR, path.basename(decodeURIComponent(pathname)));
+  try {
+    const data = await fs.readFile(file);
+    res.writeHead(200, { "content-type": TYPES[path.extname(file)] || "image/jpeg", "cache-control": "public, max-age=31536000, immutable" });
+    res.end(data);
+  } catch {
+    send(res, 404, "not found", "text/plain");
+  }
+}
+
 async function staticFile(res, pathname) {
   const rel = pathname === "/" ? "index.html" : decodeURIComponent(pathname).replace(/^\/+/, "");
   const file = path.join(PUBLIC, rel);
@@ -116,6 +132,14 @@ async function staticFile(res, pathname) {
 
 await store.init();
 
+// Make sure the two newest weeks have local photos (e.g. the seed week).
+for (const { id } of (await store.listWeeks()).slice(0, 2)) {
+  store.refreshImages(id, resolveImages).then(
+    (s) => console.log(`images ${id}:`, JSON.stringify(s)),
+    (e) => console.error(`images ${id}:`, e.message),
+  );
+}
+
 http
   .createServer(async (req, res) => {
     const url = new URL(req.url, "http://local");
@@ -127,6 +151,7 @@ http
         return await handleMcp(req, res, body);
       }
       if (url.pathname.startsWith("/api/")) return await api(req, res, url);
+      if (url.pathname.startsWith("/images/")) return await imageFile(res, url.pathname);
       return await staticFile(res, url.pathname);
     } catch (e) {
       console.error(e);

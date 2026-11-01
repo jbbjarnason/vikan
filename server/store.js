@@ -91,6 +91,25 @@ export async function updateWeek(id, fn) {
   });
 }
 
+// Resolve photos outside the write lock (slow network), then merge only the
+// image fields back so phone taps made meanwhile are kept.
+export async function refreshImages(id, resolver) {
+  const w = await getWeek(id);
+  if (!w) throw new Error(`No week ${id}`);
+  const status = await resolver(w);
+  await updateWeek(id, (cur) => {
+    for (const [rid, r] of Object.entries(w.recipes)) {
+      const c = cur.recipes?.[rid];
+      if (!c || c.name !== r.name) continue;
+      for (const k of ["image", "imageSource", "imageGenerated"]) {
+        if (r[k] === undefined) delete c[k];
+        else c[k] = r[k];
+      }
+    }
+  });
+  return status;
+}
+
 export const getFamily = () => readJson(path.join(DATA_DIR, "family.json"), {});
 export const putFamily = (f) =>
   locked(() => writeJson(path.join(DATA_DIR, "family.json"), { ...f, updatedAt: new Date().toISOString() }));
