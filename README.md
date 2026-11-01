@@ -35,8 +35,6 @@ to `main`; Watchtower on the server pulls it within 5 minutes.
 mkdir -p ~/vikan && cd ~/vikan
 curl -fsSLO https://raw.githubusercontent.com/jbbjarnason/vikan/main/docker-compose.yml   # or scp it
 echo "MCP_TOKEN=$(openssl rand -hex 32)" > .env
-# the image is private: log in with a classic PAT that has read:packages
-echo <PAT> | docker login ghcr.io -u jbbjarnason --password-stdin
 docker compose up -d
 ```
 
