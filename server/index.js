@@ -146,10 +146,16 @@ http
     try {
       if (url.pathname === "/healthz") return send(res, 200, { ok: true });
       if (url.pathname === "/mcp") {
-        if (!tokenOk(req, url)) return send(res, 401, { error: "Missing or wrong bearer token" });
+        const ok = tokenOk(req, url);
+        res.on("finish", () =>
+          console.log(`mcp ${req.method} ${res.statusCode} token:${ok ? "ok" : "no"} access:${req.headers["cf-access-jwt-assertion"] ? "jwt" : "none"} ua:${(req.headers["user-agent"] || "").slice(0, 40)}`),
+        );
+        if (!ok) return send(res, 401, { error: "Missing or wrong bearer token" });
         const body = req.method === "POST" ? await readBody(req, 5_000_000) : undefined;
         return await handleMcp(req, res, body);
       }
+      // No OAuth here: answer discovery probes with a plain 404, not the app shell.
+      if (url.pathname.startsWith("/.well-known/")) return send(res, 404, { error: "not found" });
       if (url.pathname.startsWith("/api/")) return await api(req, res, url);
       if (url.pathname.startsWith("/images/")) return await imageFile(res, url.pathname);
       return await staticFile(res, url.pathname);
