@@ -14,9 +14,12 @@ services:
       - com.centurylinklabs.watchtower.enable=true
 
   # Pulls new images from GHCR every 5 minutes after a push to main.
+  # Only needed if the server has no Watchtower yet:
+  #   docker compose --profile watchtower up -d
   # Maintained fork; the original containrrr/watchtower is archived.
   watchtower:
     image: nickfedor/watchtower:latest
+    profiles: [watchtower]
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

@@ -28,7 +28,8 @@ MCP tools: `get_context`, `get_week`, `put_week_plan`, `get_grocery_history`,
 ## Deploy on the home server
 
 GitHub Actions builds `ghcr.io/jbbjarnason/vikan` (amd64 + arm64) on every push
-to `main`; Watchtower on the server pulls it within 5 minutes.
+to `main`; Watchtower on the server pulls it (the home server's existing
+Watchtower checks hourly; use `--profile watchtower` on a box without one).
 
 ```sh
 # once, on the home server
@@ -38,7 +39,7 @@ echo "MCP_TOKEN=$(openssl rand -hex 32)" > .env
 docker compose up -d
 ```
 
-The site is then at `http://homeserver:8080`. On iPhone: Share → Add to Home Screen.
+The site is then at `http://10.11.10.98:8080`. On iPhone: Share → Add to Home Screen.
 
 ## The weekly run
 
