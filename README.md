@@ -41,6 +41,16 @@ docker compose up -d
 
 The site is then at `http://10.11.10.98:8080`. On iPhone: Share → Add to Home Screen.
 
+## Public access (vikan.app)
+
+- `https://vikan.app` → Cloudflare Tunnel (`cloudflared` in the compose stack) → `vikan:8080`.
+  Protected by Cloudflare Access: policy **Fjölskyldan** (email one-time code).
+- Policy **MCP gátt (service token)** lets the Cloudflare MCP portal reach `/mcp`
+  with service token `vikan-mcp-portal` (expires after 1 year) plus `MCP_TOKEN`.
+- **Claude connector:** `https://mcp.vikan.app/mcp` (Cloudflare MCP portal, managed OAuth).
+  Add it in claude.ai → Settings → Connectors → Add custom connector; log in with the email code.
+- At home, `http://vikan.home` (and `http://10.11.10.98:8080`) work without login.
+
 ## The weekly run
 
 The prompt is in [`planner/PROMPT.md`](planner/PROMPT.md). It needs the vikan
