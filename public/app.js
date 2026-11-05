@@ -13,6 +13,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 const kr = (n) => `${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} kr.`;
 const todayIso = () => new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
 const fmtDate = (iso) => { const d = new Date(iso + "T12:00:00"); return `${d.getDate()}. ${MONTHS[d.getMonth()]}`; };
+const fmtShort = (iso) => { const d = new Date(iso + "T12:00:00"); return `${d.getDate()}. ${MONTHS[d.getMonth()].slice(0, 3)}`; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
 function toast(msg) {
@@ -70,6 +71,27 @@ function dayFor(week, iso) {
   return { day: days.filter((d) => d.date <= iso).at(-1), upcoming: false };
 }
 
+// The days before and after one day, across week boundaries: {prev, next}, each {w, d}.
+async function neighbours(weekId, date) {
+  const ids = (await loadWeeks()).map((x) => x.id).sort();
+  const i = ids.indexOf(weekId);
+  const near = await Promise.all([ids[i - 1], weekId, ids[i + 1]].filter(Boolean).map((id) => loadWeek(id)));
+  const days = near.flatMap((w) => [...w.days].sort((a, b) => a.date.localeCompare(b.date)).map((d) => ({ w, d })));
+  const k = days.findIndex((x) => x.w.id === weekId && x.d.date === date);
+  return k < 0 ? {} : { prev: days[k - 1], next: days[k + 1] };
+}
+
+// Previous/next day buttons; swiping left/right on the page follows them.
+function pager({ prev, next }, href, middle = "") {
+  const link = (x, dir) =>
+    x
+      ? `<a class="pg ${dir}" href="${href(x)}" aria-label="${dir === "prev" ? "Fyrri" : "Næsti"} dagur: ${esc(x.d.day)}">${dir === "prev" ? "‹ " : ""}<span>${esc(x.d.day.slice(0, 3))} ${fmtShort(x.d.date)}</span>${dir === "next" ? " ›" : ""}</a>`
+      : `<span class="pg ${dir} off"></span>`;
+  return `<nav class="pager">${link(prev, "prev")}${middle}${link(next, "next")}</nav>`;
+}
+const dayHref = (x) => `#/dagur/${x.w.id}/${x.d.date}`;
+const recipeHref = (x) => `#/uppskrift/${x.w.id}/${x.d.chosen}/${x.d.date}`;
+
 const recipeImg = (r, cls = "") =>
   r.image
     ? `<div class="pic ${cls}"><img src="${esc(r.image)}" alt="" loading="lazy">${r.imageGenerated ? `<span class="ai">Mynd gerð með gervigreind</span>` : ""}</div>`
@@ -87,33 +109,38 @@ function setHeader(title, sub = "") {
 }
 
 // ---- views ----
-async function viewTonight() {
-  const id = await currentWeekId();
+// One day's dinner. Without a date: tonight (or the first dinner of the coming week).
+async function viewDay(weekId, date) {
+  const id = weekId || (await currentWeekId());
   if (!id) return viewEmpty();
   const w = await loadWeek(id);
   const t = todayIso();
-  const { day, upcoming } = dayFor(w, t);
+  const { day, upcoming } = dayFor(w, date || t);
+  const now = dayFor(w, t);
+  const tonight = !now.upcoming && now.day === day;
   const r = w.recipes[day.chosen];
-  const d = new Date();
-  setHeader("Í kvöld", upcoming ? `Næsta vika byrjar á ${DAYS_ACC[new Date(day.date + "T12:00").getDay()]}, ${fmtDate(day.date)}` : `${DAYS[d.getDay()]} ${fmtDate(t)}`);
+  if (!date) setHeader("Í kvöld", upcoming ? `Næsta vika byrjar á ${DAYS_ACC[new Date(day.date + "T12:00").getDay()]}, ${fmtDate(day.date)}` : `${DAYS[new Date().getDay()]} ${fmtDate(t)}`);
+  else setHeader(tonight ? "Í kvöld" : day.day, fmtDate(day.date));
   const next = w.days.filter((x) => x.date > day.date).slice(0, 3);
+  const nb = await neighbours(w.id, day.date);
   $view.innerHTML = `
+    ${pager(nb, dayHref, date && !tonight ? `<a class="pg now" href="#/">Í dag</a>` : "")}
     <article class="card hero">
       ${recipeImg(r)}
       <div class="body">
-        <div class="eyebrow">${upcoming ? `${esc(day.day)} · fyrsti kvöldmatur` : esc(day.day)}</div>
+        <div class="eyebrow">${upcoming && !date ? `${esc(day.day)} · fyrsti kvöldmatur` : esc(day.day)}</div>
         <h2>${esc(r.name)}</h2>
         ${r.intro ? `<p class="muted small">${esc(r.intro)}</p>` : ""}
         ${metaChips(r)}
         <div class="row" style="margin-top:14px">
-          <a class="btn" href="#/uppskrift/${w.id}/${day.chosen}">Uppskrift</a>
+          <a class="btn" href="#/uppskrift/${w.id}/${day.chosen}/${day.date}">Uppskrift</a>
           ${r.steps?.length ? `<a class="btn ghost" href="#/elda/${w.id}/${day.chosen}">Elda</a>` : ""}
         </div>
       </div>
     </article>
-    ${day.options.length > 1 ? `<p class="small muted" style="margin:10px 2px">Langar ykkur í eitthvað annað? <a href="#/vika">${day.options.length - 1} aðrir valmöguleikar</a></p>` : ""}
+    ${day.options.length > 1 ? `<p class="small muted" style="margin:10px 2px">Langar ykkur í eitthvað annað? <a href="#/vika/${w.id}">${day.options.length - 1} aðrir valmöguleikar</a></p>` : ""}
     ${next.length ? `<h3>Næstu daga</h3><div class="card">${next.map((x) => dayRow(w, x)).join("")}</div>` : ""}
-    ${w.prep?.length && upcoming ? `<h3>Á innkaupadegi</h3><div class="card"><div class="body"><ul class="ingredients">${w.prep.map((p, i) => checkLi(`prep-${w.id}-${i}`, p)).join("")}</ul></div></div>` : ""}
+    ${w.prep?.length && upcoming && !date ? `<h3>Á innkaupadegi</h3><div class="card"><div class="body"><ul class="ingredients">${w.prep.map((p, i) => checkLi(`prep-${w.id}-${i}`, p)).join("")}</ul></div></div>` : ""}
     ${installHint()}`;
   bindChecks();
 }
@@ -121,7 +148,7 @@ async function viewTonight() {
 const dayRow = (w, d) => {
   const r = w.recipes[d.chosen];
   const today = d.date === todayIso();
-  return `<a class="day${today ? " today" : ""}" href="#/uppskrift/${w.id}/${d.chosen}">
+  return `<a class="day${today ? " today" : ""}" href="#/uppskrift/${w.id}/${d.chosen}/${d.date}">
     <span class="when">${esc(d.day)} · ${fmtDate(d.date)}</span>
     <span class="what">${esc(r?.name ?? "—")}</span>
     <span class="chev">›</span></a>`;
@@ -174,14 +201,16 @@ async function viewWeek(id) {
   );
 }
 
-async function viewRecipe(weekId, rid) {
+async function viewRecipe(weekId, rid, date) {
   const w = await loadWeek(weekId);
   const r = w.recipes[rid];
   if (!r) return viewEmpty("Uppskrift fannst ekki");
-  const day = w.days.find((d) => d.chosen === rid) ?? w.days.find((d) => d.options.includes(rid));
+  const day = (date && w.days.find((d) => d.date === date)) ?? w.days.find((d) => d.chosen === rid) ?? w.days.find((d) => d.options.includes(rid));
   setHeader(r.name, day ? `${day.day} · ${fmtDate(day.date)}` : "");
   const mine = (store("feedback") || {})[`${weekId}/${rid}`];
+  const nb = day ? await neighbours(weekId, day.date) : {};
   $view.innerHTML = `
+    ${day ? pager(nb, recipeHref) : ""}
     <article class="card hero">${recipeImg(r)}<div class="body">
       ${r.intro ? `<p style="margin-top:0">${esc(r.intro)}</p>` : ""}
       ${metaChips(r)}
@@ -321,7 +350,7 @@ async function viewHistory() {
         <div class="small">${w.days.map((d) => {
           const r = w.recipes[d.chosen];
           const f = byRecipe.get(`${id}/${d.chosen}`);
-          return `<div><span class="muted">${esc(d.day.slice(0, 3))}.</span> <a href="#/uppskrift/${id}/${d.chosen}">${esc(r?.name)}</a> ${f ? emoji[f.rating] : ""}</div>`;
+          return `<div><span class="muted">${esc(d.day.slice(0, 3))}.</span> <a href="#/uppskrift/${id}/${d.chosen}/${d.date}">${esc(r?.name)}</a> ${f ? emoji[f.rating] : ""}</div>`;
         }).join("")}</div></div>`;
     }),
   );
@@ -391,17 +420,18 @@ function installHint() {
 // ---- router ----
 async function route() {
   const [name = "", ...args] = location.hash.replace(/^#\/?/, "").split("/");
-  const tab = { "": "kvold", vika: "vika", uppskrift: "vika", elda: "vika", listi: "listi", saga: "saga", vid: "vid" }[name] ?? "kvold";
+  const tab = { "": "kvold", dagur: "kvold", vika: "vika", uppskrift: "vika", elda: "vika", listi: "listi", saga: "saga", vid: "vid" }[name] ?? "kvold";
   document.querySelectorAll(".tabs a").forEach((a) => (a.dataset.tab === tab ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
   if (name !== "elda") releaseWake();
   try {
     if (name === "vika") await viewWeek(args[0]);
-    else if (name === "uppskrift") await viewRecipe(args[0], args[1]);
+    else if (name === "dagur") await viewDay(args[0], args[1]);
+    else if (name === "uppskrift") await viewRecipe(args[0], args[1], args[2]);
     else if (name === "elda") await viewCook(args[0], args[1], Number(args[2] || 0));
     else if (name === "listi") await viewList(args[0]);
     else if (name === "saga") await viewHistory();
     else if (name === "vid") await viewFamily();
-    else await viewTonight();
+    else await viewDay();
   } catch (e) {
     console.error(e);
     viewEmpty(navigator.onLine ? `Villa: ${e.message}` : "Engin tenging við heimaþjóninn.");
@@ -410,6 +440,18 @@ async function route() {
 }
 
 window.addEventListener("hashchange", route);
+// Swipe left/right to the next/previous day wherever the page has a day pager.
+let touch = null;
+$view.addEventListener("touchstart", (e) => (touch = e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : null), { passive: true });
+$view.addEventListener("touchend", (e) => {
+  if (!touch) return;
+  const dx = e.changedTouches[0].clientX - touch.x;
+  const dy = e.changedTouches[0].clientY - touch.y;
+  touch = null;
+  if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.6 || e.target.closest(".options")) return;
+  const a = $view.querySelector(`.pager a.${dx < 0 ? "next" : "prev"}`);
+  if (a) location.hash = a.getAttribute("href");
+});
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible" && location.hash.startsWith("#/elda")) route();
 });

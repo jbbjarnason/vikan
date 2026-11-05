@@ -84,6 +84,16 @@ h3 { font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: v
 .row.wrap { flex-wrap: wrap; }
 .spacer { flex: 1; }
 
+/* Day pager */
+.pager { display: flex; gap: 8px; align-items: center; margin: 0 0 12px; }
+.pager .pg {
+  flex: 1; display: flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 14px; border-radius: 99px;
+  background: var(--surface); border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 600;
+}
+.pager .next { justify-content: flex-end; }
+.pager .off { visibility: hidden; }
+.pager .now { flex: none; background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+
 /* Week */
 .day { padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: center; text-decoration: none; color: inherit; }
 .day .when { font-size: 13px; color: var(--muted); font-weight: 600; }
