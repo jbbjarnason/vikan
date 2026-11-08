@@ -315,12 +315,17 @@ async function viewList(id, cached) {
   const total = todo.reduce((s, i) => s + (i.price || 0), 0);
   const cartUrl = `https://kronan.is/snjallverslun/vorulisti?items=${encodeURIComponent(todo.filter((i) => i.sku).map((i) => `${i.sku}:${i.qty}`).join(","))}`;
   setHeader("Innkaupalisti", w.title);
-  const groups = AISLES.map((a) => [a, todo.filter((i) => (AISLES.includes(i.category) ? i.category : "Annað") === a)]).filter(([, g]) => g.length);
+  // Ticked items stay in their aisle (after the rest), so a wrong tap is easy to undo.
+  const hideDone = !!store("list:hideDone");
+  const shown = hideDone ? todo : [...todo, ...done];
+  const groups = AISLES.map((a) => [a, shown.filter((i) => (AISLES.includes(i.category) ? i.category : "Annað") === a)]).filter(([, g]) => g.length);
   const li = (i) => `<li class="item ${state(i) === "cart" ? "cart" : state(i) === "home" ? "home-state" : ""}" data-key="${esc(i.key)}">
-      <span class="box">${state(i) ? "✓" : ""}</span>
+      <span class="box">${state(i) === "home" ? "⌂" : state(i) ? "✓" : ""}</span>
       <span><span class="name">${esc(i.name)}</span>${i.qty > 1 ? ` <span class="muted">× ${i.qty}</span>` : ""}<br>
-        <span class="for">${esc([i.amount, i.for.join(", ")].filter(Boolean).join(" · "))}</span>
-        ${state(i) ? (state(i) === "home" ? `<br><span class="for">Til heima</span>` : "") : `<br><button class="home" data-home="${esc(i.key)}">Til heima</button>`}</span>
+        <span class="for">${esc([i.amount, i.for.join(", ")].filter(Boolean).join(" · "))}</span><br>
+        ${state(i)
+          ? `<span class="tag">${state(i) === "home" ? "Til heima" : "Í körfu"}</span> <button class="home" data-undo>Afturkalla</button>`
+          : `<button class="home" data-home="${esc(i.key)}">Til heima</button>`}</span>
       <span class="price">${i.price ? kr(i.price) : ""}</span></li>`;
   $view.innerHTML = `
     ${await weekPager(id, "listi")}
@@ -328,7 +333,7 @@ async function viewList(id, cached) {
     ${todo.some((i) => i.sku) ? `<a class="btn block" href="${cartUrl}" target="_blank" rel="noopener">Setja í körfu í Snjallverslun</a>` : ""}
     ${groups.map(([a, g]) => `<h3>${esc(a)}</h3><ul class="items card">${g.map(li).join("")}</ul>`).join("")}
     ${!todo.length ? `<div class="empty">Allt komið í körfuna 🎉</div>` : ""}
-    ${done.length ? `<details class="done"${todo.length ? "" : " open"}><summary>Komið í körfu eða til heima (${done.length})</summary><ul class="items card">${done.map(li).join("")}</ul></details>` : ""}
+    ${done.length ? `<button class="btn ghost block" id="toggleDone" style="margin-top:14px">${hideDone ? `Sýna merktar vörur (${done.length})` : `Fela merktar vörur (${done.length})`}</button>` : ""}
     ${w.pantryAssumed?.length ? `<p class="small muted">Gert ráð fyrir að sé til heima: ${esc(w.pantryAssumed.join(", "))}.</p>` : ""}`;
 
   const set = async (key, next) => {
@@ -346,6 +351,10 @@ async function viewList(id, cached) {
       toast("Engin tenging, reyndu aftur");
     }
   };
+  $view.querySelector("#toggleDone")?.addEventListener("click", () => {
+    store("list:hideDone", !hideDone);
+    viewList(id, w);
+  });
   $view.querySelectorAll(".item").forEach((el) =>
     el.addEventListener("click", (e) => {
       const home = e.target.closest("[data-home]");

@@ -155,10 +155,15 @@ label.field small { display: block; color: var(--muted); font-size: 13px; margin
 .item .for { font-size: 13px; color: var(--muted); }
 .item .price { font-size: 14px; color: var(--muted); text-align: right; white-space: nowrap; }
 .item .home { font-size: 12px; border: 1px solid var(--line); background: none; border-radius: 99px; padding: 4px 9px; color: var(--muted); cursor: pointer; margin-top: 4px; }
-.item.cart .box, .item.home-state .box { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.item.cart .name, .item.home-state .name { color: var(--done); text-decoration: line-through; }
+.item.cart .box { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.item.cart .name { color: var(--done); text-decoration: line-through; }
+.item.home-state { background: var(--accent-soft); }
+.item.home-state .box { border-color: var(--warm); color: var(--warm); font-weight: 700; }
+.item.home-state .name { color: var(--muted); }
+.item.cart .price, .item.home-state .price { text-decoration: line-through; color: var(--done); }
+.item .tag { font-size: 12px; font-weight: 650; color: var(--warm); margin-right: 4px; }
+.item.cart .tag { color: var(--accent); }
 .item { transition: opacity .2s; }
-details.done > summary { cursor: pointer; padding: 12px 2px; color: var(--muted); font-weight: 600; }
 
 /* History */
 .hist .w { padding: 12px 16px; border-top: 1px solid var(--line); }
