@@ -45,8 +45,8 @@ async function api(path, opts = {}) {
 let weeks = null;
 const weekCache = new Map();
 
-async function loadWeeks() {
-  weeks ??= await api("weeks");
+async function loadWeeks(fresh = false) {
+  if (fresh || !weeks) weeks = await api("weeks");
   return weeks;
 }
 async function loadWeek(id, fresh = false) {
@@ -90,6 +90,20 @@ function pager({ prev, next }, href, middle = "") {
   return `<nav class="pager">${link(prev, "prev")}${middle}${link(next, "next")}</nav>`;
 }
 const dayHref = (x) => `#/dagur/${x.w.id}/${x.d.date}`;
+
+// Previous/next week buttons for the week and list pages (swipe follows them too).
+async function weekPager(id, base) {
+  const list = [...(await loadWeeks())].sort((a, b) => a.id.localeCompare(b.id));
+  const i = list.findIndex((x) => x.id === id);
+  const cur = await currentWeekId();
+  const label = (x) => (x.title || "").split(" · ")[0] || fmtShort(x.id);
+  const link = (x, dir) =>
+    x
+      ? `<a class="pg ${dir}" href="#/${base}/${x.id}" aria-label="${dir === "prev" ? "Fyrri" : "Næsta"} vika: ${esc(x.title)}">${dir === "prev" ? "‹ " : ""}<span>${esc(label(x))}</span>${dir === "next" ? " ›" : ""}</a>`
+      : `<span class="pg ${dir} off"></span>`;
+  const middle = id !== cur ? `<a class="pg now" href="#/${base}/${cur}">Þessi vika</a>` : "";
+  return `<nav class="pager">${link(list[i - 1], "prev")}${middle}${link(list[i + 1], "next")}</nav>`;
+}
 const recipeHref = (x) => `#/uppskrift/${x.w.id}/${x.d.chosen}/${x.d.date}`;
 
 const recipeImg = (r, cls = "") =>
@@ -165,11 +179,13 @@ function bindChecks() {
 }
 
 async function viewWeek(id) {
+  await loadWeeks(true); // a week Claude just planned shows up without a reload
   id ||= await currentWeekId();
   if (!id) return viewEmpty();
   const w = await loadWeek(id);
   setHeader("Vikan", w.title);
   $view.innerHTML = `
+    ${await weekPager(w.id, "vika")}
     ${w.summary ? `<p class="muted">${esc(w.summary)}</p>` : ""}
     ${w.days.map((d) => {
       const r = w.recipes[d.chosen];
@@ -184,7 +200,8 @@ async function viewWeek(id) {
         ${d.note ? `<p class="small muted" style="padding:0 16px 12px;margin:0">${esc(d.note)}</p>` : ""}
       </section>`;
     }).join("")}
-    ${w.prep?.length ? `<h3>Undirbúningur</h3><div class="card"><div class="body"><ul class="ingredients">${w.prep.map((p, i) => checkLi(`prep-${w.id}-${i}`, p)).join("")}</ul></div></div>` : ""}`;
+    ${w.prep?.length ? `<h3>Undirbúningur</h3><div class="card"><div class="body"><ul class="ingredients">${w.prep.map((p, i) => checkLi(`prep-${w.id}-${i}`, p)).join("")}</ul></div></div>` : ""}
+    <a class="btn block ghost" style="margin-top:16px" href="#/listi/${w.id}">Innkaupalisti fyrir þessa viku</a>`;
   bindChecks();
   $view.querySelectorAll(".option").forEach((b) =>
     b.addEventListener("click", async () => {
@@ -287,6 +304,7 @@ function releaseWake() {
 }
 
 async function viewList(id, cached) {
+  if (!cached) await loadWeeks(true);
   id ||= await currentWeekId();
   if (!id) return viewEmpty();
   const w = cached ?? (await loadWeek(id, true));
@@ -305,6 +323,7 @@ async function viewList(id, cached) {
         ${state(i) ? (state(i) === "home" ? `<br><span class="for">Til heima</span>` : "") : `<br><button class="home" data-home="${esc(i.key)}">Til heima</button>`}</span>
       <span class="price">${i.price ? kr(i.price) : ""}</span></li>`;
   $view.innerHTML = `
+    ${await weekPager(id, "listi")}
     <div class="summary"><b>${todo.length}</b><span class="muted">eftir · um ${kr(total)} hjá Krónunni</span></div>
     ${todo.some((i) => i.sku) ? `<a class="btn block" href="${cartUrl}" target="_blank" rel="noopener">Setja í körfu í Snjallverslun</a>` : ""}
     ${groups.map(([a, g]) => `<h3>${esc(a)}</h3><ul class="items card">${g.map(li).join("")}</ul>`).join("")}
