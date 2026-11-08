@@ -471,8 +471,20 @@ $view.addEventListener("touchend", (e) => {
   const a = $view.querySelector(`.pager a.${dx < 0 ? "next" : "prev"}`);
   if (a) location.hash = a.getAttribute("href");
 });
+// A home-screen app can stay open for days: reload when a new version is deployed.
+let appVersion = null;
+async function checkVersion() {
+  try {
+    const { version } = await api("version");
+    if (appVersion && version !== appVersion && !location.hash.startsWith("#/elda")) return location.reload();
+    appVersion = version;
+  } catch {}
+}
+checkVersion();
 document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible" && location.hash.startsWith("#/elda")) route();
+  if (document.visibilityState !== "visible") return;
+  checkVersion();
+  if (location.hash.startsWith("#/elda")) route();
 });
 route();
 

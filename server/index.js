@@ -12,6 +12,11 @@ const PORT = Number(process.env.PORT || 8080);
 const MCP_TOKEN = process.env.MCP_TOKEN || "";
 const PUBLIC = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../public");
 
+// Fingerprint of the app files: the open app compares it and reloads after a deploy.
+const VERSION = crypto.createHash("sha256");
+for (const f of (await fs.readdir(PUBLIC)).sort()) VERSION.update(f).update(await fs.readFile(path.join(PUBLIC, f)));
+const APP_VERSION = VERSION.digest("hex").slice(0, 12);
+
 const TYPES = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -57,6 +62,7 @@ async function api(req, res, url) {
   const parts = url.pathname.split("/").filter(Boolean).slice(1); // drop "api"
   const method = req.method;
 
+  if (method === "GET" && parts[0] === "version") return send(res, 200, { version: APP_VERSION });
   if (method === "GET" && parts[0] === "weeks" && parts.length === 1) return send(res, 200, await store.listWeeks());
   if (method === "GET" && parts[0] === "weeks" && parts.length === 2) {
     const w = await store.getWeek(parts[1]);
@@ -119,7 +125,8 @@ async function staticFile(res, pathname) {
     const data = await fs.readFile(file);
     res.writeHead(200, {
       "content-type": TYPES[path.extname(file)] || "application/octet-stream",
-      "cache-control": rel === "sw.js" || rel === "index.html" ? "no-cache" : "public, max-age=300",
+      // Small files: always revalidate so a deploy shows up on the next open.
+      "cache-control": [".png", ".svg"].includes(path.extname(file)) ? "public, max-age=86400" : "no-cache",
     });
     res.end(data);
   } catch {
